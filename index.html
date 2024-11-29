@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Masukkan Alamat Manual</title>
+  <!-- Menyertakan Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js"></script>
+  <script>
+    import { initializeApp } from "firebase/app";
+    import { getAnalytics } from "firebase/analytics";
+    // Konfigurasi Firebase
+    const firebaseConfig = {
+  apiKey: "AIzaSyBdmkmAwll5Aeqzm4CIXslGumhkGMuJcCk",
+  authDomain: "fire-detection-2d860.firebaseapp.com",
+  databaseURL: "https://fire-detection-2d860-default-rtdb.firebaseio.com",
+  projectId: "fire-detection-2d860",
+  storageBucket: "fire-detection-2d860.firebasestorage.app",
+  messagingSenderId: "77254078876",
+  appId: "1:77254078876:web:b0463a7ba36411de03d859",
+  measurementId: "G-5BRKL5CBPS"
+};
+
+    // Inisialisasi Firebase
+   // Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+    // Fungsi untuk menyimpan alamat ke Firebase
+    function saveAddress() {
+      const address = document.getElementById("address").value;
+      if (address !== "") {
+        firebase.database().ref('alamat_manual').set(address)
+          .then(() => {
+            alert("Alamat berhasil disimpan!");
+            document.getElementById("address").value = ""; // Clear form
+          })
+          .catch((error) => {
+            alert("Gagal menyimpan alamat: " + error.message);
+          });
+      } else {
+        alert("Alamat tidak boleh kosong!");
+      }
+    }
+  </script>
+</head>
+<body>
+  <h2>Masukkan Alamat Manual</h2>
+  <form onsubmit="event.preventDefault(); saveAddress();">
+    <label for="address">Alamat Manual:</label><br>
+    <textarea id="address" rows="4" cols="50" placeholder="Masukkan alamat di sini"></textarea><br><br>
+    <button type="submit">Kirim Alamat</button>
+  </form>
+</body>
+</html>
